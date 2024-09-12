@@ -1,18 +1,22 @@
+
+from typing import ClassVar
 from dataclasses import dataclass, field
 from datetime import datetime, date, time
-from typing import ClassVar
+from typing import List, Dict
 
 from app.services.util import generate_unique_id, date_lower_than_today_error, event_not_found_error, \
     reminder_not_found_error, slot_not_available_error
 
 
-# TODO: Implement Reminder class here
+@dataclass
+class Reminder:
+    date_time: datetime
+    type: str = field(default="email")
+
+    EMAIL: ClassVar[str] = "email"
+    SYSTEM: ClassVar[str] = "system"
+
+    def __str__(self) -> str:
+        return f"Reminder on {self.date_time} of type {self.type}"
 
 
-# TODO: Implement Event class here
-
-
-# TODO: Implement Day class here
-
-
-# TODO: Implement Calendar class here
