@@ -1,4 +1,3 @@
-
 from typing import ClassVar
 from dataclasses import dataclass, field
 from datetime import datetime, date, time
@@ -20,3 +19,28 @@ class Reminder:
         return f"Reminder on {self.date_time} of type {self.type}"
 
 
+@dataclass
+class Event:
+    title: str
+    description: str
+    date_: date
+    start_at: time
+    end_at: time
+    id: str = field(default_factory=generate_unique_id)
+    reminders: List[Reminder] = field(default_factory=list)
+
+    def add_reminder(self, date_time: datetime, type_: str = Reminder.EMAIL) -> None:
+        reminder = Reminder(date_time, type_)
+        self.reminders.append(reminder)
+
+    def delete_reminder(self, reminder_index: int) -> None:
+        if 0 <= reminder_index < len(self.reminders):
+            self.reminders.pop(reminder_index)
+        else:
+            reminder_not_found_error()
+
+    def __str__(self) -> str:
+        return (f"ID: {self.id}\n"
+                f"Event title: {self.title}\n"
+                f"Description: {self.description}\n"
+                f"Time: {self.start_at} - {self.end_at}")
